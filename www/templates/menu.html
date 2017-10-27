@@ -39,11 +39,11 @@
         <div id="slidecontainer">
           <p>Sports: <span id="Sports" ng-init="AppCtrl.Sports=5" ng-bind="AppCtrl.Sports"></span></p>
           <input type="range" min="1" max="10" value="5" class="slider" id="sportsRange" ng-model="AppCtrl.Sports" ng-change="AppCtrl.ChangeSports()">
-        </div>
+        </div>        
       </div>
       <div class="buttondiv">
         <button id="btnGo" ng-click="Go()" value="Go" class="gobutton">Go</button>
-        <button id="btnSchoolAnalysis" ng-click="SchoolAnalysis()" value="Go" class="gobutton spacing">School Analysis</button>
+        <!--<button id="btnSchoolAnalysis" ng-click="SchoolAnalysis()" value="Go" class="gobutton spacing">School Analysis</button>-->
       </div>
     </div>
 </ion-side-menus>

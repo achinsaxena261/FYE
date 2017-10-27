@@ -4,11 +4,7 @@ angular.module('starter.controllers', ['starter.services'])
 
     $scope.Go = function () {
       $ionicSideMenuDelegate.toggleLeft();
-    }
-
-    $scope.SchoolAnalysis = function () {
-      $ionicSideMenuDelegate.toggleLeft();
-      // Highcharts.chart('pie', {
+      //  Highcharts.chart('pie', {
       //   xAxis: {
       //     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
       //       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -18,6 +14,10 @@ angular.module('starter.controllers', ['starter.services'])
       //     data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
       //   }]
       // });
+    }
+
+    $scope.SchoolAnalysis = function () {
+      $ionicSideMenuDelegate.toggleLeft();
     }
 
     $scope.ChangeSports = function () {
@@ -122,7 +122,7 @@ angular.module('starter.controllers', ['starter.services'])
       console.warn(`ERROR(${err.code}): ${err.message}`);
     };
 
-    $scope.broadcastMsg = function(state){
+    $scope.broadcastMsg = function (state) {
       $rootScope.$broadcast('stateChange', state);
     }
 
@@ -233,13 +233,109 @@ angular.module('starter.controllers', ['starter.services'])
   .controller('CardsCtrl', function ($scope, $rootScope) {
     $scope.expanded = false;
     $scope.isDashboard = false;
-    $rootScope.$on('stateChange',function(evt, data){
+    $rootScope.$on('stateChange', function (evt, data) {
       $scope.expanded = data;
     });
 
     $scope.SchoolAnalysis = function () {
       $scope.isDashboard = !$scope.isDashboard;
+
+      Highcharts.chart('pie', {
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+
+        series: [{
+          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }],
+
+        height:200,
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              },
+              yAxis: {
+                labels: {
+                  align: 'left',
+                  x: 0,
+                  y: -5
+                },
+                title: {
+                  text: null
+                }
+              },
+              subtitle: {
+                text: null
+              },
+              credits: {
+                enabled: false
+              }
+            }
+          }]
+        }
+      });
+
+      Highcharts.chart('column', {
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+
+        series: [{
+          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              },
+              yAxis: {
+                labels: {
+                  align: 'left',
+                  x: 0,
+                  y: -5
+                },
+                title: {
+                  text: null
+                }
+              },
+              subtitle: {
+                text: null
+              },
+              credits: {
+                enabled: false
+              }
+            }
+          }]
+        }
+      });
     }
+
+    window.addEventListener("resize",function(){
+      var chart = angular.element('#pie').highcharts();
+        
+        var w = angular.element('#container').closest(".wrapper").width()
+        // setsize will trigger the graph redraw 
+        chart.setSize(       
+            w,w * (3/4),false
+        );
+    })    
 
     $scope.aspects = [
       {aspect: 'Security', score: 'high'},
