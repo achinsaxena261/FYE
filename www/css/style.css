@@ -101,3 +101,11 @@
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
 }
+
+.cards{
+    display: flex;
+    flex-direction: row;
+}
+.card{
+    width: 100%;
+}

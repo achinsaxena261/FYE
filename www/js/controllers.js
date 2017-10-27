@@ -19,6 +19,10 @@ angular.module('starter.controllers', [])
     $scope.serachedLoc = null;
     var myLatlng = new google.maps.LatLng(12.972442, 77.580643);
 
+    $scope.results = [
+      1,2,3,4
+    ];    
+
     var renderer = new google.maps.DirectionsRenderer({
       suppressPolylines: true,
       polylineOptions: {
@@ -155,4 +159,16 @@ angular.module('starter.controllers', [])
   
   .controller('CardsCtrl',function($scope){
 
+  })
+  
+  .directive('fyeCards',function(){
+    return{
+      replace: true,
+      controller: 'CardsCtrl',
+      controllerAs: 'ctrl',
+      scope:{
+        results: '='
+      },
+      templateUrl: '../templates/cards.html'
+    }
   });
