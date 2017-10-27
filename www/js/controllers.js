@@ -237,10 +237,6 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.expanded = data;
     });
 
-    $scope.colorRange = function () {
-
-    }
-
     $scope.SchoolAnalysis = function () {
       $scope.isDashboard = !$scope.isDashboard;
 
@@ -427,6 +423,23 @@ Highcharts.chart('pieSports', {
           ]
         }]
       });
+
+    window.addEventListener("resize",function(){
+      var chart = angular.element('#pie').highcharts();
+        
+        var w = angular.element('#container').closest(".wrapper").width()
+        // setsize will trigger the graph redraw 
+        chart.setSize(       
+            w,w * (3/4),false
+        );
+    })    
+
+    $scope.aspects = [
+      {aspect: 'Security', score: 'high'},
+      {aspect: 'Education', score: 'medium'},
+      {aspect: 'Infra', score: 'medium'},
+      {aspect: 'Others', score: 'low'}
+    ];
 
 Highcharts.chart('column', {
   xAxis: {
