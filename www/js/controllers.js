@@ -232,9 +232,18 @@ angular.module('starter.controllers', ['starter.services'])
 
   .controller('CardsCtrl', function ($scope, $rootScope) {
     $scope.expanded = false;
+    $scope.isDashboard = false;
     $rootScope.$on('stateChange',function(evt, data){
       $scope.expanded = data;
     });
+
+    $scope.colorRange = function(){
+
+    }
+
+    $scope.SchoolAnalysis = function () {
+      $scope.isDashboard = !$scope.isDashboard;
+    }
 
     $scope.aspects = [
       {aspect: 'Security', score: 8},
