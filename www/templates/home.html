@@ -5,11 +5,8 @@
        type="text"></input>
     </div> 
     <div id="map" ng-init="geolocate()"></div>
-    <div class="search-result" ng-if="serachedLoc" ng-class="isExpand? 'expanded' : isClicked? 'collapsed' : ''" ng-init="isExpand = false">
-      <div class="expand-result" ng-click="isExpand = !isExpand; isClicked = true">
-        <i ng-class="isExpand? 'down' : 'up'"></i>
-      </div>
-      <div class="close" ng-click="resetAll()"></div>
+    <div class="search-result" on-swipe-up="isExpand = true; swiped = true; broadcastMsg(isExpand)" on-swipe-down="isExpand = false; swiped = true; broadcastMsg(isExpand)" ng-if="serachedLoc" ng-class="isExpand? 'expanded' : swiped? 'collapsed' : ''" ng-init="isExpand = false">
+      <div class="close" ng-click="resetAll(); broadcastMsg(isExpand)"></div>
       <fye-cards results="results"></fye-cards>
     </div>
   </ion-content>

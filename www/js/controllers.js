@@ -75,7 +75,7 @@ angular.module('starter.controllers', ['starter.services'])
     console.log(GetSchoolsService.getSchoolsDetails());
   })
 
-  .controller('HomeCtrl', function ($scope) {
+  .controller('HomeCtrl', function ($scope, $rootScope) {
     var circle = null;
     var geoMarker = null;
     var serachMarker = null;
@@ -121,6 +121,10 @@ angular.module('starter.controllers', ['starter.services'])
     function error(err) {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     };
+
+    $scope.broadcastMsg = function(state){
+      $rootScope.$broadcast('stateChange', state);
+    }
 
     var createMarker = function (info) {
       serachMarker = new google.maps.Marker({
@@ -169,6 +173,7 @@ angular.module('starter.controllers', ['starter.services'])
     }
 
     $scope.resetAll = function () {
+      $scope.swiped = false;
       $scope.isClicked = false;
       angular.element(document.getElementById("autocomplete")).val("");
       serachMarker.setMap(null);
@@ -225,16 +230,25 @@ angular.module('starter.controllers', ['starter.services'])
 
   })
 
+  .controller('CardsCtrl', function ($scope, $rootScope) {
+    $scope.expanded = false;
+    $rootScope.$on('stateChange',function(evt, data){
+      $scope.expanded = data;
+    });
 
-  .controller('CardsCtrl', function ($scope) {
-    console.log($scope.results);
+    $scope.aspects = [
+      {aspect: 'Security', score: 8},
+      {aspect: 'Education', score: 6},
+      {aspect: 'Infra', score: 7},
+      {aspect: 'Others', score: 4}
+    ];
+
     $scope.moveLeft = function (index) {
       if (index !== 0) {
         $scope.results[index].active = false;
         $scope.results[index - 1].active = true;
       }
     }
-
 
     $scope.moveRight = function (index) {
       if (index !== $scope.results.length - 1) {
