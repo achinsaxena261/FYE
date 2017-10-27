@@ -16,29 +16,29 @@
   <div data-role="main" class="ui-content">
       <div data-role="rangeslider">        
         <div id="slidecontainer">
-        <p>Security: <span id="Security"></span></p>
-        <input type="range" min="1" max="10" value="5" class="slider" id="securityRange">
+        <p>Security: <span id="Security" ng-init="AppCtrl.Security=5" ng-bind="AppCtrl.Security"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="securityRange" ng-model="AppCtrl.Security" ng-change="AppCtrl.ChangeSecurity()">
         </div>
       </div>
 
       <div data-role="rangeslider">        
         <div id="slidecontainer">
-        <p>Education: <span id="Education"></span></p>
-        <input type="range" min="1" max="10" value="5" class="slider" id="educationRange">
+        <p>Education: <span id="Education" ng-init="AppCtrl.Education=5" ng-bind="AppCtrl.Education"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="educationRange" ng-model="AppCtrl.Education" ng-change="AppCtrl.ChangeEducation()">
         </div>
       </div>
 
       <div data-role="rangeslider">        
         <div id="slidecontainer">
-        <p>Infra: <span id="Infra"></span></p>
-        <input type="range" min="1" max="10" value="5" class="slider" id="infraRange">
+        <p>Infra: <span id="Infra" ng-init="AppCtrl.Infra=5" ng-bind="AppCtrl.Infra"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="infraRange" ng-model="AppCtrl.Infra" ng-change="AppCtrl.ChangeInfra()">
         </div>
       </div>
 
       <div data-role="rangeslider">        
         <div id="slidecontainer">
-        <p>Sports: <span id="Sports"></span></p>
-        <input type="range" min="1" max="10" value="5" class="slider" id="sportsRange">
+        <p>Sports: <span id="Sports" ng-init="AppCtrl.Sports=5" ng-bind="AppCtrl.Sports"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="sportsRange" ng-model="AppCtrl.Sports" ng-change="AppCtrl.ChangeSports()">
         </div>
       </div>
   </div>

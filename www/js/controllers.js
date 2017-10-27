@@ -1,12 +1,64 @@
 angular.module('starter.controllers', [])
 
   .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
-  
+
+
+    $scope.ChangeSports = function () {
+      var user = {};
+      return {
+        getSports: function () {
+          return user.Sports;
+        },
+
+        setSports: function (Sports) {
+          user.Sports = Sports;
+        }
+      };
+    }
+
+    $scope.ChangeInfra = function () {
+      var user = {};
+      return {
+        getInfra: function () {
+          return user.Infra;
+        },
+
+        setInfra: function (Infra) {
+          user.Infra = Infra;
+        }
+      };
+    }
+
+    $scope.ChangeEducation = function () {
+      var user = {};
+      return {
+        getEducation: function () {
+          return user.Education;
+        },
+
+        setEducation: function (Education) {
+          user.Education = Education;
+        }
+      };
+    }
+
+    $scope.ChangeSecurity = function () {
+      var user = {};
+      return {
+        getSecurity: function () {
+          return user.Security;
+        },
+
+        setSecurity: function (Security) {
+          user.Security = Security;
+        }
+      };
+    }
 
   })
 
   .controller('HomeCtrl', function ($scope) {
-    var circle = null;    
+    var circle = null;
     var geoMarker = null;
     var serachMarker = null;
     var schoolMarkers = [];
@@ -14,8 +66,8 @@ angular.module('starter.controllers', [])
     var myLatlng = new google.maps.LatLng(12.972442, 77.580643);
 
     $scope.results = [
-      1,2,3,4
-    ];    
+      1, 2, 3, 4
+    ];
 
     var renderer = new google.maps.DirectionsRenderer({
       suppressPolylines: true,
@@ -63,7 +115,7 @@ angular.module('starter.controllers', [])
 
       $scope.serachedLoc = info.address;
       $scope.$apply();
-    }       
+    }
 
     var autocomplete = new google.maps.places.Autocomplete(
       /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
@@ -89,20 +141,20 @@ angular.module('starter.controllers', [])
     var map = new google.maps.Map(document.getElementById("map"), defaultOptions);
 
     var updateLocation = function (loc) {
-      map.panTo(loc);      
+      map.panTo(loc);
       map.setZoom(10);
-      map.setCenter(loc);      
+      map.setCenter(loc);
     }
 
-    $scope.resetAll = function(){
+    $scope.resetAll = function () {
       $scope.isClicked = false;
       angular.element(document.getElementById("autocomplete")).val("");
       serachMarker.setMap(null);
-      schoolMarkers.forEach(function(value){
+      schoolMarkers.forEach(function (value) {
         value.setMap(null);
       });
       schoolMarkers = [];
-      $scope.serachedLoc = null;   
+      $scope.serachedLoc = null;
       $scope.geolocate();
     }
 
@@ -115,7 +167,7 @@ angular.module('starter.controllers', [])
           };
 
           var newLocation = new google.maps.LatLng(geolocation.lat, geolocation.lng);
-          map.panTo(newLocation);          
+          map.panTo(newLocation);
           map.setCenter(newLocation);
           map.setZoom(18);
 
@@ -124,7 +176,7 @@ angular.module('starter.controllers', [])
             scaledSize: new google.maps.Size(20, 20), // scaled size
           };
 
-          if(geoMarker){ geoMarker.setMap(null); }
+          if (geoMarker) { geoMarker.setMap(null); }
           geoMarker = new google.maps.Marker({
             map: map,
             icon: icon,
@@ -132,7 +184,7 @@ angular.module('starter.controllers', [])
             title: 'current location'
           });
 
-          if(circle){ circle.setMap(null); }
+          if (circle) { circle.setMap(null); }
           circle = new google.maps.Circle({
             strokeColor: '#03a9f4',
             strokeOpacity: 0.8,
@@ -150,17 +202,17 @@ angular.module('starter.controllers', [])
     }
 
   })
-  
-  .controller('CardsCtrl',function($scope){
+
+  .controller('CardsCtrl', function ($scope) {
 
   })
-  
-  .directive('fyeCards',function(){
-    return{
+
+  .directive('fyeCards', function () {
+    return {
       replace: true,
       controller: 'CardsCtrl',
       controllerAs: 'ctrl',
-      scope:{
+      scope: {
         results: '='
       },
       templateUrl: '../templates/cards.html'
