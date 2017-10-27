@@ -205,8 +205,8 @@
 .fye-card-container{
     width: 80%;
     background-color: whitesmoke;
-    padding: 5px;
-    border: 1px solid;    
+    border: 1px solid;  
+    text-align: center;  
 }
 
 .fye-card-container .base-info{
@@ -236,13 +236,60 @@
 }
 
 .score-card{
-    min-height: 20%;
+    min-height: 15%;
     background-color: white;
     border: 1px solid;
     margin: 5px;
     box-shadow: 1px 1px 1px grey;
-    padding: 5px;
+    padding: 3px;
+    display: flex;
 }
 .score-card:active{
     background-color: rgb(141, 137, 137);
+}
+
+.result-block{
+    margin: 0 30px;
+}
+
+.toggle-analysis{
+    bottom: 8%;
+    position: fixed;
+    align-self: center;    
+}
+
+.icon-security:after{
+    display: inline-block;
+    content: '';
+    background-image: url('https://cdn.onlinewebfonts.com/svg/img_94122.png');
+    background-size: 100%; 
+    height: 50px;
+    width: 50px;
+}
+
+.icon-education:after{
+    display: inline-block;
+    content: '';
+    background-image: url('http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/rounded-glossy-black-icons-culture/033340-rounded-glossy-black-icon-culture-books3-stacked.png');
+    background-size: 100%;
+    height: 50px;
+    width: 50px;    
+}
+
+.icon-infra:after{
+    display: inline-block;
+    content: '';
+    background-image: url('https://cdn0.iconfinder.com/data/icons/flatt3d-icon-pack/512/Flatt3d-Building-256.png');
+    background-size: 100%;
+    height: 50px;
+    width: 50px;
+}
+
+.icon-others:after{
+    display: inline-block;
+    content: '';
+    background-image: url('https://cdn2.iconfinder.com/data/icons/sports-vol-1/128/013-512.png');
+    background-size: 100%;
+    height: 50px;
+    width: 50px;
 }

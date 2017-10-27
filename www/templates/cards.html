@@ -5,17 +5,26 @@
     </div>
     <div class="fye-card-container" on-swipe-right="moveLeft($index)" on-swipe-left="moveRight($index)">
       <div class="base-info" ng-class="expanded? 'full-view':'basic-view'">
-          {{result.obj}}      
+        {{result.obj}}
       </div>
       <div class="detail-info" ng-if="expanded">
-        <div class="score-card" ng-repeat="score in aspects">
-          <h4>{{score.aspect}}</h4>
-          <span>{{score.score}}</span>
+        <div class="score-card" ng-repeat="score in aspects" ng-if="!isDashboard">
+          <span class="icon-{{score.aspect.toLowerCase()}}"></span>
+          <div class="result-block">
+            <h4>{{score.aspect}}</h4>
+          </div>
+        </div>
+        <div class="dashboard" ng-if="isDashboard">
+          <div id="pie">Pie charts</div>
+          <div id="column">Column charts</div>
+        </div>
+        <div class="toggle-analysis">
+          <button id="btnSchoolAnalysis" ng-click="SchoolAnalysis()" value="Go" class="gobutton spacing">School Analysis</button>
         </div>
       </div>
     </div>
     <div class="slide-right" ng-click="moveRight($index)">
-        <i class="right"></i>
+      <i class="right"></i>
     </div>
   </div>
 </div>
