@@ -1,10 +1,22 @@
-angular.module('starter.controllers', [])
+angular.module('starter.services', [])
 
-.factory('urlService',function(){
-  var url = 'http://172.17.159.46:8080/api/';
-  return{
-    getUrl : function(){
-      return url;
-    }
-  }
-})
+    .factory('urlService', function ($http) {
+        var url = 'http://10.212.129.47/api/';
+        return {
+            getUrl: function () {
+                return url;
+            }
+        }
+    })
+
+    .factory('GetSchoolsService', function ($http, urlService) {
+        var url = urlService.getUrl() + 'values/GetSchools';
+        return {
+            getSchoolsDetails: function () {
+                $http.get(url).then(function(response){
+                    console.log(response.data);
+                });
+            }
+        }
+    })
+
