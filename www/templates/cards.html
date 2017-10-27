@@ -8,15 +8,15 @@
         {{result.obj}}
       </div>
       <div class="detail-info" ng-if="expanded">
-        <div class="score-card" ng-repeat="score in aspects" ng-if="!isDashboard">
+        <div class="score-card" ng-repeat="score in aspects" ng-show="!isDashboard">
           <span class="icon-{{score.aspect.toLowerCase()}}"></span>
           <div class="result-block">
             <h4>{{score.aspect}}</h4>
           </div>
         </div>
-        <div class="dashboard" ng-if="isDashboard">
-          <div id="pie">Pie charts</div>
-          <div id="column">Column charts</div>
+        <div class="dashboard" ng-show="isDashboard">
+          <div id="pie" style="height:150px; width:90%;margin:10px">Pie charts</div>
+          <div id="column" style="height:150px; width:90%;margin:10px">Column charts</div>
         </div>
         <div class="toggle-analysis">
           <button id="btnSchoolAnalysis" ng-click="SchoolAnalysis()" value="Go" class="gobutton spacing">School Analysis</button>

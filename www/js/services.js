@@ -1,7 +1,7 @@
 angular.module('starter.services', [])
 
     .factory('urlService', function ($http) {
-        var url = 'http://10.212.129.47/api/';
+        var url = 'http://10.212.129.97/FYEService/api/';
         return {
             getUrl: function () {
                 return url;
@@ -10,7 +10,7 @@ angular.module('starter.services', [])
     })
 
     .factory('GetSchoolsService', function ($http, urlService) {
-        var url = urlService.getUrl() + 'values/GetSchools';
+        var url = urlService.getUrl() + 'values/GetSchool';
         return {
             getSchoolsDetails: function () {
                 $http.get(url).then(function(response){
@@ -19,3 +19,14 @@ angular.module('starter.services', [])
             }
         }
     })
+
+.factory('GetSchoolSecurity', function ($http, urlService) {
+        var url = urlService.getUrl() + 'values/GetSecurity?id=';
+        return {
+            getSchoolsDetails: function (schoolId) {
+                $http.get(url).then(function(response){
+                    console.log(response.data);
+                });
+            }
+        }
+    })    
