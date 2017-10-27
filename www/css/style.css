@@ -1,11 +1,11 @@
 /* Empty. Add your own CSS if you like */
 @keyframes expand-me {
-    0%   {height: 20%;}
-    100% {height: 50%;}
+    0%   {height: 23%;}
+    100% {height: 100%;}
 }
 @keyframes collapse-me {
-    0%   {height: 50%;}
-    100% {height: 20%;}
+    0%   {height: 100%;}
+    100% {height: 23%;}
 }
 
 #map{
@@ -39,13 +39,13 @@
 }
 
 .search-result.expanded{
-    height: 50%;
+    height: 100%;
     animation-name: expand-me;
     animation-duration: 0.5s;      
 }
 
 .search-result.collapsed{
-    height: 20%;
+    height: 23%;
     animation-name: collapse-me;
     animation-duration: 0.5s;      
 }
@@ -92,6 +92,16 @@
     padding: 10px;
   }
   
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+  
   .up {
       transform: rotate(-135deg);
       -webkit-transform: rotate(-135deg);
@@ -102,10 +112,21 @@
     -webkit-transform: rotate(45deg);
 }
 
-.cards{
-    display: flex;
-    flex-direction: row;
+.fye-cards{
+    height: 100%;
+    margin: 5px 5px;    
 }
-.card{
+.fye-card{
+    display: flex;
+    flex-direction: row;    
     width: 100%;
+    height: 100%;
+}
+
+.fye-card.slide-left{
+    width: 20%;
+}
+
+.fye-card.slide-left{
+    width: 20%;
 }

@@ -1,5 +1,13 @@
-<div class="cards">
-  <div class="card" ng-repeat="result in results">
-   {{result}}
+<div class="fye-cards">
+  <div class="fye-card" ng-repeat="result in results" ng-show="result.active">
+    <div class="slide-left" ng-click="moveLeft($index)">
+      <i class="left"></i>
+    </div>
+    <div class="fye-card-container">
+      {{result.obj}}
+    </div>
+    <div class="slide-right" ng-click="moveRight($index)">
+        <i class="right"></i>
+    </div>
   </div>
 </div>

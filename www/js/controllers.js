@@ -20,7 +20,10 @@ angular.module('starter.controllers', [])
     var myLatlng = new google.maps.LatLng(12.972442, 77.580643);
 
     $scope.results = [
-      1,2,3,4
+      {obj: 1, active: true},
+      {obj: 2, active: false},
+      {obj: 3, active: false},
+      {obj: 4, active: false}
     ];    
 
     var renderer = new google.maps.DirectionsRenderer({
@@ -158,7 +161,20 @@ angular.module('starter.controllers', [])
   })
   
   .controller('CardsCtrl',function($scope){
+      console.log($scope.results);
+      $scope.moveLeft = function(index){
+          if(index !== 0){
+            $scope.results[index].active = false;
+            $scope.results[index - 1].active = true;
+          }
+      }
 
+      $scope.moveRight = function(index) {
+        if(index !== $scope.results.length - 1){
+          $scope.results[index].active = false;
+          $scope.results[index + 1].active = true;
+        }
+      }
   })
   
   .directive('fyeCards',function(){
