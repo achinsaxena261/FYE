@@ -256,49 +256,206 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.SchoolAnalysis = function () {
       $scope.isDashboard = !$scope.isDashboard;
 
-      Highcharts.chart('pie', {
-        xAxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      Highcharts.chart('pieSecurity', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
         },
-
-        series: [{
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-        }],
-
-        height: 200,
-
-        responsive: {
-          rules: [{
-            condition: {
-              maxWidth: 500
-            },
-            chartOptions: {
-              legend: {
-                align: 'center',
-                verticalAlign: 'bottom',
-                layout: 'horizontal'
-              },
-              yAxis: {
-                labels: {
-                  align: 'left',
-                  x: 0,
-                  y: -5
-                },
-                title: {
-                  text: null
-                }
-              },
-              subtitle: {
-                text: null
-              },
-              credits: {
-                enabled: false
+        title: {
+          text: 'Security'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
               }
             }
-          }]
-        }
+          }
+        },
+        series: [{
+          name: 'Security',
+          colorByPoint: true,
+          data: [{
+            name: 'Visitor Access',
+            y: 29.9
+          },
+          {
+            name: 'Visitor Check',
+            y: 71.5
+          },
+          {
+            name: 'Crime',
+            y: 71.5
+          },
+          {
+            name: 'Background Verification',
+            y: 71.5
+          }
+          ]
+        }]
       });
+
+      Highcharts.chart('pieEducation', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: 'Education'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Education',
+          colorByPoint: true,
+          data: [{
+            name: '10th Pass',
+            y: 29.9
+          },
+          {
+            name: '12th Pass',
+            y: 71.5
+          },
+          {
+            name: 'Top Engg. Selecation',
+            y: 71.5
+          },
+          {
+            name: 'Top Medical Selecation',
+            y: 71.5
+          }
+          ]
+        }]
+      });
+
+      Highcharts.chart('pieInfra', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: 'Infra'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Infra',
+          colorByPoint: true,
+          data: [{
+            name: '10th Pass',
+            y: 29.9
+          },
+          {
+            name: '12th Pass',
+            y: 71.5
+          },
+          {
+            name: 'Top Engg. Selecation',
+            y: 71.5
+          },
+          {
+            name: 'Top Medical Selecation',
+            y: 71.5
+          }
+          ]
+        }]
+      });
+
+      Highcharts.chart('pieSports', {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: 'Sports'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          name: 'Sports',
+          colorByPoint: true,
+          data: [{
+            name: '10th Pass',
+            y: 29.9
+          },
+          {
+            name: '12th Pass',
+            y: 71.5
+          },
+          {
+            name: 'Top Engg. Selecation',
+            y: 71.5
+          },
+          {
+            name: 'Top Medical Selecation',
+            y: 71.5
+          }
+          ]
+        }]
+      });
+
+      window.addEventListener("resize", function () {
+        var chart = angular.element('#pie').highcharts();
+
+        var w = angular.element('#container').closest(".wrapper").width()
+        // setsize will trigger the graph redraw 
+        chart.setSize(
+          w, w * (3 / 4), false
+        );
+      })
+
+      $scope.aspects = [
+        { aspect: 'Security', score: 'high' },
+        { aspect: 'Education', score: 'medium' },
+        { aspect: 'Infra', score: 'medium' },
+        { aspect: 'Others', score: 'low' }
+      ];
 
       Highcharts.chart('column', {
         xAxis: {
@@ -307,39 +464,9 @@ angular.module('starter.controllers', ['starter.services'])
         },
 
         series: [{
+          type: 'column',
           data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-        }],
-
-        responsive: {
-          rules: [{
-            condition: {
-              maxWidth: 500
-            },
-            chartOptions: {
-              legend: {
-                align: 'center',
-                verticalAlign: 'bottom',
-                layout: 'horizontal'
-              },
-              yAxis: {
-                labels: {
-                  align: 'left',
-                  x: 0,
-                  y: -5
-                },
-                title: {
-                  text: null
-                }
-              },
-              subtitle: {
-                text: null
-              },
-              credits: {
-                enabled: false
-              }
-            }
-          }]
-        }
+        }]
       });
     }
 
@@ -354,10 +481,10 @@ angular.module('starter.controllers', ['starter.services'])
     })
 
     $scope.aspects = [
-      { aspect: 'Security', score: 'high' },
-      { aspect: 'Education', score: 'medium' },
-      { aspect: 'Infra', score: 'medium' },
-      { aspect: 'Others', score: 'low' }
+      { aspect: 'Security', score: 8 },
+      { aspect: 'Education', score: 6 },
+      { aspect: 'Infra', score: 7 },
+      { aspect: 'Others', score: 4 }
     ];
 
     $scope.moveLeft = function (index) {
