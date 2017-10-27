@@ -1,0 +1,16 @@
+<ion-view view-title="Home">
+  <ion-content>
+    <div class="search-bar">
+      <input id="autocomplete" placeholder="Enter your address"
+       type="text"></input>
+    </div> 
+    <div id="map" ng-init="geolocate()"></div>
+    <div class="search-result" ng-if="serachedLoc" ng-class="isExpand? 'expanded' : isClicked? 'collapsed' : ''" ng-init="isExpand = false">
+      <div class="expand-result" ng-click="isExpand = !isExpand; isClicked = true">
+        <i ng-class="isExpand? 'down' : 'up'"></i>
+      </div>
+      <div class="close" ng-click="resetAll()"></div>
+      <h4>{{serachedLoc}}</h4>
+    </div>
+  </ion-content>
+</ion-view>

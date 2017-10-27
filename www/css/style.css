@@ -1,0 +1,103 @@
+/* Empty. Add your own CSS if you like */
+@keyframes expand-me {
+    0%   {height: 20%;}
+    100% {height: 50%;}
+}
+@keyframes collapse-me {
+    0%   {height: 50%;}
+    100% {height: 20%;}
+}
+
+#map{
+    height: 100%;
+}
+.search-bar{
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: rgba(96, 99, 106, 0.61);
+    border-radius: 2px;
+    box-shadow: -1px 1px 1px;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+}
+
+.search-result{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background: rgba(96, 99, 106, 0.61);
+    border-radius: 2px;
+    box-shadow: 0px -1px 1px black;
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;      
+}
+
+.search-result.expanded{
+    height: 50%;
+    animation-name: expand-me;
+    animation-duration: 0.5s;      
+}
+
+.search-result.collapsed{
+    height: 20%;
+    animation-name: collapse-me;
+    animation-duration: 0.5s;      
+}
+
+.search-bar > input {
+    width: 100%;
+    border-radius: 2px;
+    padding: 2px;
+    opacity: 0.9;
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .close:before, .close:after {
+    position: absolute;
+    left: 5px;
+    content: ' ';
+    height: 15px;
+    width: 2px;
+    background-color: black;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+
+  .expand-result{
+    cursor: pointer;
+    text-align: center;
+}
+
+  i {
+    border: solid white;
+    border-width: 0 8px 8px 0;
+    display: inline-block;
+    padding: 10px;
+  }
+  
+  .up {
+      transform: rotate(-135deg);
+      -webkit-transform: rotate(-135deg);
+  }
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
