@@ -12,19 +12,34 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Menu</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item menu-close href="#/app/search">
-          Search
-        </ion-item>
-        <ion-item menu-close href="#/app/home">
-          Home
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+  <ion-side-menu side="left">    
+  <div data-role="main" class="ui-content">
+      <div data-role="rangeslider">        
+        <div id="slidecontainer">
+        <p>Security: <span id="Security"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="securityRange">
+        </div>
+      </div>
+
+      <div data-role="rangeslider">        
+        <div id="slidecontainer">
+        <p>Education: <span id="Education"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="educationRange">
+        </div>
+      </div>
+
+      <div data-role="rangeslider">        
+        <div id="slidecontainer">
+        <p>Infra: <span id="Infra"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="infraRange">
+        </div>
+      </div>
+
+      <div data-role="rangeslider">        
+        <div id="slidecontainer">
+        <p>Sports: <span id="Sports"></span></p>
+        <input type="range" min="1" max="10" value="5" class="slider" id="sportsRange">
+        </div>
+      </div>
+  </div>
 </ion-side-menus>
