@@ -72,10 +72,9 @@ angular.module('starter.controllers', ['starter.services'])
       };
     }
 
-    console.log(GetSchoolsService.getSchoolsDetails());
   })
 
-  .controller('HomeCtrl', function ($scope, $rootScope) {
+  .controller('HomeCtrl', function ($scope, $rootScope, GetSchoolsService, GetPincode) {
     var circle = null;
     var geoMarker = null;
     var serachMarker = null;
@@ -126,11 +125,26 @@ angular.module('starter.controllers', ['starter.services'])
       $rootScope.$broadcast('stateChange', state);
     }
 
-    var createMarker = function (info) {
+    var schoolIcon = {
+      url: "https://cdn0.iconfinder.com/data/icons/flatt3d-icon-pack/512/Flatt3d-Building-256.png", // url
+      scaledSize: new google.maps.Size(20, 20), // scaled size
+    };
+
+    var findSchools = function (info) {
+      schoolMarkers.push(new google.maps.Marker({
+        map: map,
+        position: new google.maps.LatLng(info.lat, info.lng),
+        title: info.address,
+        icon: schoolIcon
+      }));
+    }
+
+    var createMarker = function (info, icon) {
       serachMarker = new google.maps.Marker({
         map: map,
         position: new google.maps.LatLng(info.lat, info.lng),
-        title: info.address
+        title: info.address,
+        icon: icon
       });
 
       serachMarker.content = '<div class="infoWindowContent">' + info.address + '</div>';
@@ -160,6 +174,8 @@ angular.module('starter.controllers', ['starter.services'])
         else {
           updateLocation(new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
         }
+        var pinCode = GetPincode.getSchoolsDetails(place.geometry.location.lat(), place.geometry.location.lng());
+        //GetSchoolsService.getSchoolsDetails(pinCode);
         createMarker({ lat: place.geometry.location.lat(), lng: place.geometry.location.lng(), address: place.formatted_address });
       }
     });
@@ -250,7 +266,7 @@ angular.module('starter.controllers', ['starter.services'])
           data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
         }],
 
-        height:200,
+        height: 200,
 
         responsive: {
           rules: [{
@@ -327,21 +343,21 @@ angular.module('starter.controllers', ['starter.services'])
       });
     }
 
-    window.addEventListener("resize",function(){
+    window.addEventListener("resize", function () {
       var chart = angular.element('#pie').highcharts();
-        
-        var w = angular.element('#container').closest(".wrapper").width()
-        // setsize will trigger the graph redraw 
-        chart.setSize(       
-            w,w * (3/4),false
-        );
-    })    
+
+      var w = angular.element('#container').closest(".wrapper").width()
+      // setsize will trigger the graph redraw 
+      chart.setSize(
+        w, w * (3 / 4), false
+      );
+    })
 
     $scope.aspects = [
-      {aspect: 'Security', score: 'high'},
-      {aspect: 'Education', score: 'medium'},
-      {aspect: 'Infra', score: 'medium'},
-      {aspect: 'Others', score: 'low'}
+      { aspect: 'Security', score: 'high' },
+      { aspect: 'Education', score: 'medium' },
+      { aspect: 'Infra', score: 'medium' },
+      { aspect: 'Others', score: 'low' }
     ];
 
     $scope.moveLeft = function (index) {
