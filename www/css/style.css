@@ -112,7 +112,7 @@
     content: ' ';
     height: 15px;
     width: 2px;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.7);
   }
   .close:before {
     transform: rotate(45deg);
@@ -127,7 +127,7 @@
 }
 
   i {
-    border: solid white;
+    border: solid rgba(0, 0, 0, 0.7);
     border-width: 0 8px 8px 0;
     display: inline-block;
     padding: 10px;
@@ -183,13 +183,15 @@
     border: 1px solid;    
 }
 
-/* .fye-card-container .base-info{
-    min-height: 30%;
+.fye-card-container .base-info{
+    min-height: 20%;
 }
 .fye-card-container .detail-info{
     min-height: 70%;
-    border-top: 1px solid;
-} */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+}
 
 .fye-card.slide-left{
     width: 20%;
@@ -197,4 +199,24 @@
 
 .fye-card.slide-left{
     width: 20%;
+}
+
+.basic-view{
+    height: 100%;
+}
+
+.full-view{
+    height: 20%;
+}
+
+.score-card{
+    min-height: 20%;
+    background-color: white;
+    border: 1px solid;
+    margin: 5px;
+    box-shadow: 1px 1px 1px grey;
+    padding: 5px;
+}
+.score-card:active{
+    background-color: rgb(141, 137, 137);
 }

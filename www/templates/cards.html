@@ -3,11 +3,15 @@
     <div class="slide-left" ng-click="moveLeft($index)">
       <i class="left"></i>
     </div>
-    <div class="fye-card-container">
-      <div class="base-info">
+    <div class="fye-card-container" on-swipe-right="moveLeft($index)" on-swipe-left="moveRight($index)">
+      <div class="base-info" ng-class="expanded? 'full-view':'basic-view'">
           {{result.obj}}      
       </div>
-      <div class="detail-info">
+      <div class="detail-info" ng-if="expanded">
+        <div class="score-card" ng-repeat="score in aspects">
+          <h4>{{score.aspect}}</h4>
+          <span>{{score.score}}</span>
+        </div>
       </div>
     </div>
     <div class="slide-right" ng-click="moveRight($index)">
