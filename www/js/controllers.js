@@ -98,7 +98,7 @@ angular.module('starter.controllers', [])
     }
 
     $scope.resetAll = function(){
-      $scope.isClicked = false;
+      $scope.swiped = false;
       angular.element(document.getElementById("autocomplete")).val("");
       serachMarker.setMap(null);
       schoolMarkers.forEach(function(value){
