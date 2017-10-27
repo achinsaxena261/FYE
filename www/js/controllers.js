@@ -237,19 +237,15 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.expanded = data;
     });
 
-    $scope.colorRange = function(){
-
-    }
-
     $scope.SchoolAnalysis = function () {
       $scope.isDashboard = !$scope.isDashboard;
     }
 
     $scope.aspects = [
-      {aspect: 'Security', score: 8},
-      {aspect: 'Education', score: 6},
-      {aspect: 'Infra', score: 7},
-      {aspect: 'Others', score: 4}
+      {aspect: 'Security', score: 'high'},
+      {aspect: 'Education', score: 'medium'},
+      {aspect: 'Infra', score: 'medium'},
+      {aspect: 'Others', score: 'low'}
     ];
 
     $scope.moveLeft = function (index) {

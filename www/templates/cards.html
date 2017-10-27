@@ -13,6 +13,9 @@
           <div class="result-block">
             <h4>{{score.aspect}}</h4>
           </div>
+          <div class="score-scale">
+            <span class="icon-{{score.score.toLowerCase()}}"></span>
+          </div>
         </div>
         <div class="dashboard" ng-if="isDashboard">
           <div id="pie">Pie charts</div>
