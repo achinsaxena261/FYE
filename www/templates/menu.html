@@ -41,7 +41,9 @@
           <input type="range" min="1" max="10" value="5" class="slider" id="sportsRange" ng-model="AppCtrl.Sports" ng-change="AppCtrl.ChangeSports()">
         </div>
       </div>
-      <!--<div id="container">Placeholder for chart</div>-->
-      
+      <div class="buttondiv">
+        <button id="btnGo" ng-click="Go()" value="Go" class="gobutton">Go</button>
+        <button id="btnSchoolAnalysis" ng-click="SchoolAnalysis()" value="Go" class="gobutton spacing">School Analysis</button>
+      </div>
     </div>
-</ion-side-menus> 
+</ion-side-menus>

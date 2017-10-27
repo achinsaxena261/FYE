@@ -1,7 +1,24 @@
 angular.module('starter.controllers', ['starter.services'])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, GetSchoolsService) {
+  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, GetSchoolsService, $ionicSideMenuDelegate) {
 
+    $scope.Go = function () {
+      $ionicSideMenuDelegate.toggleLeft();
+    }
+
+    $scope.SchoolAnalysis = function () {
+      $ionicSideMenuDelegate.toggleLeft();
+      // Highcharts.chart('pie', {
+      //   xAxis: {
+      //     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      //       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      //   },
+
+      //   series: [{
+      //     data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+      //   }]
+      // });
+    }
 
     $scope.ChangeSports = function () {
       var user = {};
@@ -56,16 +73,6 @@ angular.module('starter.controllers', ['starter.services'])
     }
 
     console.log(GetSchoolsService.getSchoolsDetails());
-    // Highcharts.chart('container', {
-    //   xAxis: {
-    //     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    //       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    //   },
-
-    //   series: [{
-    //     data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-    //   }]
-    // });
   })
 
   .controller('HomeCtrl', function ($scope) {
@@ -246,5 +253,16 @@ angular.module('starter.controllers', ['starter.services'])
         results: '='
       },
       templateUrl: '../templates/cards.html'
+    }
+  })
+
+  .directive('chartsType', function () {
+    return {
+      replace: true,
+      controller: 'AppCtrl',
+      controllerAs: 'ctrlCharts',
+      scope: {
+      },
+      templateUrl: '../templates/ChartAnalysis.html'
     }
   });
