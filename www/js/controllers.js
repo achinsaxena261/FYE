@@ -70,9 +70,7 @@ angular.module('starter.controllers', ['starter.services'])
           user.Security = Security;
         }
       };
-    }
-
-    console.log(GetSchoolsService.getSchoolsDetails());
+    }    
   })
 
   .controller('HomeCtrl', function ($scope, $rootScope) {
@@ -230,7 +228,7 @@ angular.module('starter.controllers', ['starter.services'])
 
   })
 
-  .controller('CardsCtrl', function ($scope, $rootScope) {
+  .controller('CardsCtrl', function ($scope, $rootScope, GetSchoolSecurity, GetSchoolEducation, GetSchoolInfra, GetSchoolSports) {
     $scope.expanded = false;
     $scope.isDashboard = false;
     $rootScope.$on('stateChange', function (evt, data) {
@@ -240,263 +238,328 @@ angular.module('starter.controllers', ['starter.services'])
     $scope.SchoolAnalysis = function () {
       $scope.isDashboard = !$scope.isDashboard;
 
-      Highcharts.chart('pieSecurity', {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: 'Security'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+      GetSchoolSecurity.getSchoolsSecurity('33120100306').then(function (response) {
+      var accessLevel=0;
+      var accessCheck=0;
+      var crimeFactor=0;
+      var BVFactor=0;
+      if (response[0] == 'Medium') {
+        accessLevel = 6;
+      }
+      else if (response[0] == 'High') {
+        accessLevel = 9;
+      }
+      else if (response[0] == 'Low') {
+        accessLevel = 2;
+      }
+      else{
+        accessLevel = 6;        
+      }
+
+       if (response[1] == 'Medium') {
+        accessCheck = 6;
+      }
+      else if (response[1] == 'High') {
+        accessCheck = 9;
+      }
+      else if (response[1] == 'Low') {
+        accessCheck = 2;
+      }
+      else{
+        accessCheck = 6;        
+      }
+      
+      if (response[2] == 'Medium') {
+        crimeFactor = 6;
+      }
+      else if (response[2] == 'High') {
+        crimeFactor = 9;
+      }
+      else if (response[2] == 'Low') {
+        crimeFactor = 2;
+      }
+      else{
+        crimeFactor = 6;        
+      }
+
+      if (response[3] == 'Medium') {
+        BVFactor = 6;
+      }
+      else if (response[3] == 'High') {
+        BVFactor = 9;
+      }
+      else if (response[3] == 'Low') {
+        BVFactor = 2;
+      }
+      else{
+        BVFactor = 6;        
+      }
+
+
+        Highcharts.chart('pieSecurity', {
+          chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+          },
+          title: {
+            text: 'Security'
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
               }
             }
-          }
-        },
-        series: [{
-          name: 'Security',
-          colorByPoint: true,
-          data: [{
-            name: 'Visitor Access',
-            y: 29.9
           },
-          {
-            name: 'Visitor Check',
-            y: 71.5
-          },
-          {
-            name: 'Crime',
-            y: 71.5
-          },
-          {
-            name: 'Background Verification',
-            y: 71.5
-          }
-          ]
-        }]
-      });
-
-      Highcharts.chart('pieEducation', {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: 'Education'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-              }
+          series: [{
+            name: 'Security',
+            colorByPoint: true,
+            data: [{
+              name: 'Visitor Access',
+              y: accessLevel
+            },
+            {
+              name: 'Visitor Check',
+              y: accessCheck
+            },
+            {
+              name: 'Crime',
+              y: crimeFactor
+            },
+            {
+              name: 'Background Verification',
+              y: BVFactor
             }
-          }
-        },
-        series: [{
-          name: 'Education',
-          colorByPoint: true,
-          data: [{
-            name: '10th Pass',
-            y: 29.9
-          },
-          {
-            name: '12th Pass',
-            y: 71.5
-          },
-          {
-            name: 'Top Engg. Selecation',
-            y: 71.5
-          },
-          {
-            name: 'Top Medical Selecation',
-            y: 71.5
-          }
-          ]
-        }]
+            ]
+          }]
+        });
       });
 
-Highcharts.chart('pieInfra', {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: 'Infra'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Infra',
-          colorByPoint: true,
-          data: [{
-            name: '10th Pass',
-            y: 29.9
-          },
-          {
-            name: '12th Pass',
-            y: 71.5
-          },
-          {
-            name: 'Top Engg. Selecation',
-            y: 71.5
-          },
-          {
-            name: 'Top Medical Selecation',
-            y: 71.5
-          }
-          ]
-        }]
-      });
+      // GetSchoolEducation.getSchoolsEducation('33120100306').then(function (response) {
+      //   Highcharts.chart('pieEducation', {
+      //     chart: {
+      //       plotBackgroundColor: null,
+      //       plotBorderWidth: null,
+      //       plotShadow: false,
+      //       type: 'pie'
+      //     },
+      //     title: {
+      //       text: 'Education'
+      //     },
+      //     plotOptions: {
+      //       pie: {
+      //         allowPointSelect: true,
+      //         cursor: 'pointer',
+      //         dataLabels: {
+      //           enabled: true,
+      //           format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+      //           style: {
+      //             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+      //           }
+      //         }
+      //       }
+      //     },
+      //     series: [{
+      //       name: 'Education',
+      //       colorByPoint: true,
+      //       data: [{
+      //         name: '10th Pass',
+      //         y: response.data[0]
+      //       },
+      //       {
+      //         name: '12th Pass',
+      //         y: response.data[1]
+      //       },
+      //       {
+      //         name: 'Top Engg. Selecation',
+      //         y: response.data[2]
+      //       },
+      //       {
+      //         name: 'Top Medical Selecation',
+      //         y: response.data[3]
+      //       }
+      //       ]
+      //     }]
+      //   });
+      // });
 
-Highcharts.chart('pieSports', {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: 'Sports'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-              style: {
-                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-              }
-            }
-          }
-        },
-        series: [{
-          name: 'Sports',
-          colorByPoint: true,
-          data: [{
-            name: '10th Pass',
-            y: 29.9
-          },
-          {
-            name: '12th Pass',
-            y: 71.5
-          },
-          {
-            name: 'Top Engg. Selecation',
-            y: 71.5
-          },
-          {
-            name: 'Top Medical Selecation',
-            y: 71.5
-          }
-          ]
-        }]
-      });
+      // GetSchoolInfra.getSchoolsInfra('33120100306').then(function (response) {
+      //   Highcharts.chart('pieInfra', {
+      //     chart: {
+      //       plotBackgroundColor: null,
+      //       plotBorderWidth: null,
+      //       plotShadow: false,
+      //       type: 'pie'
+      //     },
+      //     title: {
+      //       text: 'Infra'
+      //     },
+      //     plotOptions: {
+      //       pie: {
+      //         allowPointSelect: true,
+      //         cursor: 'pointer',
+      //         dataLabels: {
+      //           enabled: true,
+      //           format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+      //           style: {
+      //             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+      //           }
+      //         }
+      //       }
+      //     },
+      //     series: [{
+      //       name: 'Infra',
+      //       colorByPoint: true,
+      //       data: [{
+      //         name: 'School Area',
+      //         y: response.data[0]
+      //       },
+      //       {
+      //         name: 'Playground Area',
+      //         y: response.data[1]
+      //       },
+      //       {
+      //         name: 'Toilet Hygiene',
+      //         y: response.data[2]
+      //       },
+      //       {
+      //         name: 'Emergency Access',
+      //         y: response.data[3]
+      //       }
+      //       ]
+      //     }]
+      //   });
+      // })
+      
+      // GetSchoolSports.getSchoolsSports('33120100306').then(function (response) {
+      //   Highcharts.chart('pieSports', {
+      //     chart: {
+      //       plotBackgroundColor: null,
+      //       plotBorderWidth: null,
+      //       plotShadow: false,
+      //       type: 'pie'
+      //     },
+      //     title: {
+      //       text: 'Sports'
+      //     },
+      //     plotOptions: {
+      //       pie: {
+      //         allowPointSelect: true,
+      //         cursor: 'pointer',
+      //         dataLabels: {
+      //           enabled: true,
+      //           format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+      //           style: {
+      //             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+      //           }
+      //         }
+      //       }
+      //     },
+      //     series: [{
+      //       name: 'Sports',
+      //       colorByPoint: true,
+      //       data: [{
+      //         name: 'Distict Selection',
+      //         y: response.data[0]
+      //       },
+      //       {
+      //         name: 'State Selection',
+      //         y: response.data[1]
+      //       },
+      //       {
+      //         name: 'National Selection',
+      //         y: response.data[2]
+      //       },
+      //       {
+      //         name: '',
+      //         y: response.data[3]
+      //       }
+      //       ]
+      //     }]
+      //   });
+      // })
+      
+      window.addEventListener("resize", function () {
+        var chart = angular.element('#pie').highcharts();
 
-    window.addEventListener("resize",function(){
-      var chart = angular.element('#pie').highcharts();
-        
         var w = angular.element('#container').closest(".wrapper").width()
         // setsize will trigger the graph redraw 
-        chart.setSize(       
-            w,w * (3/4),false
+        chart.setSize(
+          w, w * (3 / 4), false
         );
-    })    
+      })
 
-    $scope.aspects = [
-      {aspect: 'Security', score: 'high'},
-      {aspect: 'Education', score: 'medium'},
-      {aspect: 'Infra', score: 'medium'},
-      {aspect: 'Others', score: 'low'}
-    ];
+      $scope.aspects = [
+        { aspect: 'Security', score: 'high' },
+        { aspect: 'Education', score: 'medium' },
+        { aspect: 'Infra', score: 'medium' },
+        { aspect: 'Others', score: 'low' }
+      ];
 
-Highcharts.chart('column', {
-  xAxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  },
+      Highcharts.chart('column', {
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
 
-  series: [{
-    type: 'column',
-    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-  }]
-});
+        series: [{
+          type: 'column',
+          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        }]
+      });
     }
 
-window.addEventListener("resize", function () {
-  var chart = angular.element('#pie').highcharts();
+    window.addEventListener("resize", function () {
+      var chart = angular.element('#pie').highcharts();
 
-  var w = angular.element('#container').closest(".wrapper").width()
-  // setsize will trigger the graph redraw 
-  chart.setSize(
-    w, w * (3 / 4), false
-  );
-})
+      var w = angular.element('#container').closest(".wrapper").width()
+      // setsize will trigger the graph redraw 
+      chart.setSize(
+        w, w * (3 / 4), false
+      );
+    })
 
-$scope.aspects = [
-  { aspect: 'Security', score: 8 },
-  { aspect: 'Education', score: 6 },
-  { aspect: 'Infra', score: 7 },
-  { aspect: 'Others', score: 4 }
-];
+    $scope.aspects = [
+      { aspect: 'Security', score: 8 },
+      { aspect: 'Education', score: 6 },
+      { aspect: 'Infra', score: 7 },
+      { aspect: 'Others', score: 4 }
+    ];
 
-$scope.moveLeft = function (index) {
-  if (index !== 0) {
-    $scope.results[index].active = false;
-    $scope.results[index - 1].active = true;
-  }
-}
+    $scope.moveLeft = function (index) {
+      if (index !== 0) {
+        $scope.results[index].active = false;
+        $scope.results[index - 1].active = true;
+      }
+    }
 
-$scope.moveRight = function (index) {
-  if (index !== $scope.results.length - 1) {
-    $scope.results[index].active = false;
-    $scope.results[index + 1].active = true;
-  }
-}
+    $scope.moveRight = function (index) {
+      if (index !== $scope.results.length - 1) {
+        $scope.results[index].active = false;
+        $scope.results[index + 1].active = true;
+      }
+    }
   })
 
   .directive('fyeCards', function () {
-  return {
-    replace: true,
-    controller: 'CardsCtrl',
-    controllerAs: 'ctrl',
-    scope: {
-      results: '='
-    },
-    templateUrl: '../templates/cards.html'
-  }
-})
+    return {
+      replace: true,
+      controller: 'CardsCtrl',
+      controllerAs: 'ctrl',
+      scope: {
+        results: '='
+      },
+      templateUrl: '../templates/cards.html'
+    }
+  })
 
   .directive('chartsType', function () {
     return {
