@@ -1,11 +1,11 @@
 <div class="fye-cards">
-  <div class="fye-card" ng-repeat="result in results" ng-show="result.active">
+  <div class="fye-card" ng-repeat="school in results" ng-show="school.active">
     <div class="slide-left" ng-click="moveLeft($index)">
       <i class="left"></i>
     </div>
     <div class="fye-card-container" on-swipe-right="moveLeft($index)" on-swipe-left="moveRight($index)">
       <div class="base-info" ng-class="expanded? 'full-view':'basic-view'">
-        {{result.obj}}
+        {{school.name}}
       </div>
       <div class="detail-info" ng-if="expanded">
         <div class="score-card" ng-repeat="score in aspects" ng-show="!isDashboard">
