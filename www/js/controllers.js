@@ -74,12 +74,13 @@ angular.module('starter.controllers', ['starter.services'])
 
   })
 
-  .controller('HomeCtrl', function ($scope, $rootScope, GetSchoolsService, GetPincode) {
+  .controller('HomeCtrl', function ($scope, $rootScope, GetSchoolsService, GetPincode, GetGeocode) {
     var circle = null;
     var geoMarker = null;
     var serachMarker = null;
     var schoolMarkers = [];
     $scope.serachedLoc = null;
+    $scope.schools = [];
     var myLatlng = new google.maps.LatLng(12.972442, 77.580643);
 
     $scope.results = [
@@ -130,13 +131,20 @@ angular.module('starter.controllers', ['starter.services'])
       scaledSize: new google.maps.Size(20, 20), // scaled size
     };
 
-    var findSchools = function (info) {
-      schoolMarkers.push(new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng(info.lat, info.lng),
-        title: info.address,
-        icon: schoolIcon
-      }));
+    var findSchools = function (response) {
+      $scope.schools = response;
+      $rootScope.$broadcast('schoolsFound',response);
+      response.forEach((unit, index)=>{
+          var info = GetGeocode.getGeocode();
+          info.forEach((value, index)=>{
+          schoolMarkers.push(new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng(value.lat, value.lng),
+            title: unit.SchoolName,
+            icon: schoolIcon
+          }));
+        })
+      });
     }
 
     var createMarker = function (info, icon) {
@@ -174,8 +182,11 @@ angular.module('starter.controllers', ['starter.services'])
         else {
           updateLocation(new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()));
         }
-        var pinCode = GetPincode.getSchoolsDetails(place.geometry.location.lat(), place.geometry.location.lng());
-        //GetSchoolsService.getSchoolsDetails(pinCode);
+        GetPincode.getZipDetails(place.geometry.location.lat(), place.geometry.location.lng()).then(function(data){
+          GetSchoolsService.getSchoolsDetails(data).then(function(response){
+            findSchools(response);
+          });
+        });
         createMarker({ lat: place.geometry.location.lat(), lng: place.geometry.location.lng(), address: place.formatted_address });
       }
     });
@@ -249,10 +260,17 @@ angular.module('starter.controllers', ['starter.services'])
   .controller('CardsCtrl', function ($scope, $rootScope) {
     $scope.expanded = false;
     $scope.isDashboard = false;
+    $scope.results = [];
     $rootScope.$on('stateChange', function (evt, data) {
       $scope.expanded = data;
     });
-
+    $rootScope.$on('schoolsFound', function (evt, data) {
+      $scope.results = [];
+      console.log(data);
+      data.forEach((value, index)=>{
+        $scope.results.push({id: value.School_Id, name: value.SchoolName, active: index === 0? true:false });
+      });
+    });
     $scope.SchoolAnalysis = function () {
       $scope.isDashboard = !$scope.isDashboard;
 
@@ -508,7 +526,6 @@ angular.module('starter.controllers', ['starter.services'])
       controller: 'CardsCtrl',
       controllerAs: 'ctrl',
       scope: {
-        results: '='
       },
       templateUrl: '../templates/cards.html'
     }
