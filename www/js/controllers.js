@@ -1,9 +1,18 @@
 angular.module('starter.controllers', ['starter.services'])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout, GetSchoolsService, $ionicSideMenuDelegate) {
-
-    $scope.Go = function () {
+  .controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $timeout, GetSchoolsService, $ionicSideMenuDelegate) {
+    $scope.Security = 5;
+    $scope.Education = 5;
+    $scope.Infra = 5;
+    $scope.Sports = 5;
+    $scope.Go = function (data) {
       $ionicSideMenuDelegate.toggleLeft();
+      $rootScope.$broadcast('requeastModel', [
+        {prop: data.value1}, 
+        {prop: data.value2},
+        {prop: data.value3},
+        {prop: data.value4}
+      ]);
       //  Highcharts.chart('pie', {
       //   xAxis: {
       //     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -73,7 +82,7 @@ angular.module('starter.controllers', ['starter.services'])
     }    
   })
 
-  .controller('HomeCtrl', function ($scope, $rootScope, GetSchoolsService, GetPincode, GetGeocode) {
+  .controller('HomeCtrl', function ($scope, $rootScope, GetSchoolsService,GetSchoolSecurity, GetPincode, GetGeocode) {
     var circle = null;
     var geoMarker = null;
     var serachMarker = null;
@@ -88,7 +97,6 @@ angular.module('starter.controllers', ['starter.services'])
       { obj: 3, active: false },
       { obj: 4, active: false }
     ];
-
 
     var renderer = new google.maps.DirectionsRenderer({
       suppressPolylines: true,
@@ -121,7 +129,7 @@ angular.module('starter.controllers', ['starter.services'])
       console.warn(`ERROR(${err.code}): ${err.message}`);
     };
 
-    $scope.broadcastMsg = function (state) {
+    $scope.broadcastMsg = function (state) { 
       $rootScope.$broadcast('stateChange', state);
     }
 
@@ -209,7 +217,7 @@ angular.module('starter.controllers', ['starter.services'])
       schoolMarkers = [];
       $scope.serachedLoc = null;
       $scope.geolocate();
-    }
+    }   
 
     $scope.geolocate = function () {
       if (navigator.geolocation) {
@@ -265,15 +273,46 @@ angular.module('starter.controllers', ['starter.services'])
     });
     $rootScope.$on('schoolsFound', function (evt, data) {
       $scope.results = [];
-      console.log(data);
       data.forEach((value, index)=>{
         $scope.results.push({id: value.School_Id, name: value.SchoolName, active: index === 0? true:false });
       });
     });
-    $scope.SchoolAnalysis = function () {
+    $rootScope.$on('requeastModel', function (evt, data) {
+      $scope.aspects.forEach((value,index)=>{
+        if(data[index].prop <=10 && data[index].prop >=7){
+            value.score = 'high';
+          }  
+          else if(data[index].prop <=6 && data[index].prop >=4){
+            value.score = 'medium';
+          }
+          else{
+            value.score = 'low';
+          }
+      });    
+    });
+    
+
+    $scope.aspects = [
+      { aspect: 'Security', score: 'high' },
+      { aspect: 'Education', score: 'medium' },
+      { aspect: 'Infra', score: 'medium' },
+      { aspect: 'Others', score: 'low' }
+    ];
+
+    $scope.getData = function (schoolId) {
+      if (schoolId) {
+        GetSchoolSecurity.getSchoolsSecurity(schoolId).then(function (response) {
+          if(response.CrimeLevelData){ $scope.aspects[0] = response.CrimeLevelData.toLowerCase();}
+          if(response.ResultLevelData){ $scope.aspects[1] = response.ResultLevelData.toLowerCase();}
+          if(response.InfraLevelData){ $scope.aspects[2] = response.InfraLevelData.toLowerCase();}
+        });
+      }
+    } 
+
+    $scope.SchoolAnalysis = function (schoolId) {
       $scope.isDashboard = !$scope.isDashboard;
 
-      GetSchoolSecurity.getSchoolsSecurity('33120100306').then(function (response) {
+      GetSchoolSecurity.getSchoolsSecurity(schoolId).then(function (response) {
       var accessLevel=0;
       var accessCheck=0;
       var crimeFactor=0;
@@ -378,53 +417,53 @@ angular.module('starter.controllers', ['starter.services'])
         });
       });
 
-      // GetSchoolEducation.getSchoolsEducation('33120100306').then(function (response) {
-      //   Highcharts.chart('pieEducation', {
-      //     chart: {
-      //       plotBackgroundColor: null,
-      //       plotBorderWidth: null,
-      //       plotShadow: false,
-      //       type: 'pie'
-      //     },
-      //     title: {
-      //       text: 'Education'
-      //     },
-      //     plotOptions: {
-      //       pie: {
-      //         allowPointSelect: true,
-      //         cursor: 'pointer',
-      //         dataLabels: {
-      //           enabled: true,
-      //           format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-      //           style: {
-      //             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-      //           }
-      //         }
-      //       }
-      //     },
-      //     series: [{
-      //       name: 'Education',
-      //       colorByPoint: true,
-      //       data: [{
-      //         name: '10th Pass',
-      //         y: response.data[0]
-      //       },
-      //       {
-      //         name: '12th Pass',
-      //         y: response.data[1]
-      //       },
-      //       {
-      //         name: 'Top Engg. Selecation',
-      //         y: response.data[2]
-      //       },
-      //       {
-      //         name: 'Top Medical Selecation',
-      //         y: response.data[3]
-      //       }
-      //       ]
-      //     }]
-      //   });
-      // });
+      GetSchoolEducation.getSchoolsEducation('33120100306').then(function (response) {
+        Highcharts.chart('pieEducation', {
+          chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+          },
+          title: {
+            text: 'Education'
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+              }
+            }
+          },
+          series: [{
+            name: 'Education',
+            colorByPoint: true,
+            data: [{
+              name: '10th Pass',
+              y: response[12][2][0]
+            },
+            {
+              name: '12th Pass',
+              y: response[12][2][1]
+            },
+            {
+              name: 'Top Engg. Selecation',
+              y: response[12][2][2]
+            },
+            {
+              name: 'Top Medical Selecation',
+              y: response[12][2][3]
+            }
+            ]
+          }]
+        });
+      });
 
       // GetSchoolInfra.getSchoolsInfra('33120100306').then(function (response) {
       //   Highcharts.chart('pieInfra', {
@@ -532,13 +571,6 @@ angular.module('starter.controllers', ['starter.services'])
         );
       })
 
-      $scope.aspects = [
-        { aspect: 'Security', score: 'high' },
-        { aspect: 'Education', score: 'medium' },
-        { aspect: 'Infra', score: 'medium' },
-        { aspect: 'Others', score: 'low' }
-      ];
-
       Highcharts.chart('column', {
         xAxis: {
           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -561,13 +593,6 @@ angular.module('starter.controllers', ['starter.services'])
         w, w * (3 / 4), false
       );
     })
-
-    $scope.aspects = [
-      { aspect: 'Security', score: 8 },
-      { aspect: 'Education', score: 6 },
-      { aspect: 'Infra', score: 7 },
-      { aspect: 'Others', score: 4 }
-    ];
 
     $scope.moveLeft = function (index) {
       if (index !== 0) {

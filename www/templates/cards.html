@@ -1,13 +1,13 @@
 <div class="fye-cards">
   <div class="fye-card" ng-repeat="school in results" ng-show="school.active">
-    <div class="slide-left" ng-click="moveLeft($index)">
+    <div class="slide-left" ng-click="moveLeft($index); getData(school.id)">
       <i class="left"></i>
     </div>
-    <div class="fye-card-container" on-swipe-right="moveLeft($index)" on-swipe-left="moveRight($index)">
+    <div class="fye-card-container" on-swipe-right="moveLeft($index); getData(school.id)" on-swipe-left="moveRight($index); getData(school.id)">
       <div class="base-info" ng-class="expanded? 'full-view':'basic-view'">
         {{school.name}}
       </div>
-      <div class="detail-info" ng-if="expanded">
+      <div class="detail-info" ng-if="expanded" ng-init="getData(school.id)">
         <div class="score-card" ng-repeat="score in aspects" ng-show="!isDashboard">
           <span class="icon-{{score.aspect.toLowerCase()}}"></span>
           <div class="result-block">
@@ -18,18 +18,18 @@
           </div>
         </div>
         <div class="dashboard" ng-show="isDashboard">
-          <div id="pieSecurity" style="height:300px; width:85%;margin:10px"></div>
-          <div id="pieEducation" style="height:300px; width:85%;margin:10px"></div>
-          <div id="pieInfra" style="height:300px; width:85%;margin:10px"></div>
-          <div id="pieSports" style="height:300px; width:85%;margin:10px"></div>
-          <div id="column" style="height:300px; width:85%;margin:10px">Column charts</div>
+          <div id="pieSecurity" style="height:300px; width:92%;margin:10px"></div>
+          <div id="pieEducation" style="height:300px; width:92%;margin:10px"></div>
+          <div id="pieInfra" style="height:300px; width:92%;margin:10px"></div>
+          <div id="pieSports" style="height:300px; width:92%;margin:10px"></div>
+          <div id="column" style="height:300px; width:92%;margin:10px">Column charts</div>
         </div>
         <div class="toggle-analysis">
-          <button id="btnSchoolAnalysis" ng-click="SchoolAnalysis()" value="Go" class="gobutton spacing">School Analysis</button>
+          <button id="btnSchoolAnalysis" ng-click="SchoolAnalysis(school.id)" value="Go" class="gobutton spacing">School Analysis</button>
         </div>
       </div>
     </div>
-    <div class="slide-right" ng-click="moveRight($index)">
+    <div class="slide-right" ng-click="moveRight($index);getData(school.id)">
       <i class="right"></i>
     </div>
   </div>

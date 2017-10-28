@@ -1,7 +1,7 @@
 angular.module('starter.services', [])
 
     .factory('urlService', function ($http) {
-        var url = 'http://10.212.242.183/FYEService/api/';
+        var url = 'http://10.212.138.229/FYEService/api/';
         return {
             getUrl: function () {
                 return url;
@@ -36,8 +36,8 @@ angular.module('starter.services', [])
         var url = urlService.getUrl() + 'values/GetEducation?id=';
         return {
             getSchoolsEducation: function (schoolId) {
-                $http.get(url + schoolId).then(function (response) {
-                    console.log(response.data);
+                return $http.get(url + schoolId).then(function (response) {
+                    return response.data;
                 });
             }
         }
