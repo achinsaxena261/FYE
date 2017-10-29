@@ -211,6 +211,10 @@
 
 .fye-card-container .base-info{
     min-height: 20%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;        
 }
 .fye-card-container .detail-info{
     min-height: 70%;
@@ -305,7 +309,7 @@
     background-color: rgb(240, 240, 18);
 }
 
-.icon-low{
+.icon-poor{
     height: 40px;
     width: 40px;
     background-color: red;

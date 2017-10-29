@@ -217,6 +217,12 @@ angular.module('starter.controllers', ['starter.services'])
       schoolMarkers = [];
       $scope.serachedLoc = null;
       $scope.geolocate();
+      $rootScope.$broadcast('requeastModel', [
+        {prop: 5}, 
+        {prop: 5},
+        {prop: 5},
+        {prop: 5}
+      ]);      
     }   
 
     $scope.geolocate = function () {
@@ -286,25 +292,31 @@ angular.module('starter.controllers', ['starter.services'])
             value.score = 'medium';
           }
           else{
-            value.score = 'low';
+            value.score = 'poor';
           }
       });    
     });
     
 
     $scope.aspects = [
-      { aspect: 'Security', score: 'high' },
+      { aspect: 'Security', score: 'medium' },
       { aspect: 'Education', score: 'medium' },
-      { aspect: 'Infra', score: 'medium' },
-      { aspect: 'Others', score: 'low' }
+      { aspect: 'Infra', score: 'poor' },
+      { aspect: 'Others', score: 'poor' }
     ];
 
     $scope.getData = function (schoolId) {
       if (schoolId) {
         GetSchoolSecurity.getSchoolsSecurity(schoolId).then(function (response) {
-          if(response.CrimeLevelData){ $scope.aspects[0] = response.CrimeLevelData.toLowerCase();}
-          if(response.ResultLevelData){ $scope.aspects[1] = response.ResultLevelData.toLowerCase();}
-          if(response.InfraLevelData){ $scope.aspects[2] = response.InfraLevelData.toLowerCase();}
+          if(response.AccessLevelFactor !== null && response.AccessLevelFactor !== "not sure"){ 
+            $scope.aspects[0].score = response.AccessLevelFactor.toLowerCase();
+          }
+          if(response.ResultFactor !== null && response.ResultFactor !== "not sure"){ 
+            $scope.aspects[1].score = response.ResultFactor.toLowerCase();
+          }
+          if(response.InfraFactor === null && response.InfraFactor !== "not sure"){ 
+            $scope.aspects[2].score = response.InfraFactor.toLowerCase();
+          }
         });
       }
     } 
@@ -323,7 +335,7 @@ angular.module('starter.controllers', ['starter.services'])
       else if (response[0] == 'High') {
         accessLevel = 9;
       }
-      else if (response[0] == 'Low') {
+      else if (response[0] == 'Poor') {
         accessLevel = 2;
       }
       else{
@@ -336,7 +348,7 @@ angular.module('starter.controllers', ['starter.services'])
       else if (response[1] == 'High') {
         accessCheck = 9;
       }
-      else if (response[1] == 'Low') {
+      else if (response[1] == 'Poor') {
         accessCheck = 2;
       }
       else{
@@ -349,7 +361,7 @@ angular.module('starter.controllers', ['starter.services'])
       else if (response[2] == 'High') {
         crimeFactor = 9;
       }
-      else if (response[2] == 'Low') {
+      else if (response[2] == 'Poor') {
         crimeFactor = 2;
       }
       else{
@@ -362,7 +374,7 @@ angular.module('starter.controllers', ['starter.services'])
       else if (response[3] == 'High') {
         BVFactor = 9;
       }
-      else if (response[3] == 'Low') {
+      else if (response[3] == 'Poor') {
         BVFactor = 2;
       }
       else{
@@ -417,53 +429,53 @@ angular.module('starter.controllers', ['starter.services'])
         });
       });
 
-      GetSchoolEducation.getSchoolsEducation('33120100306').then(function (response) {
-        Highcharts.chart('pieEducation', {
-          chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-          },
-          title: {
-            text: 'Education'
-          },
-          plotOptions: {
-            pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                  color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
-              }
-            }
-          },
-          series: [{
-            name: 'Education',
-            colorByPoint: true,
-            data: [{
-              name: '10th Pass',
-              y: response[12][2][0]
-            },
-            {
-              name: '12th Pass',
-              y: response[12][2][1]
-            },
-            {
-              name: 'Top Engg. Selecation',
-              y: response[12][2][2]
-            },
-            {
-              name: 'Top Medical Selecation',
-              y: response[12][2][3]
-            }
-            ]
-          }]
-        });
-      });
+      // GetSchoolEducation.getSchoolsEducation('33120100306').then(function (response) {
+      //   Highcharts.chart('pieEducation', {
+      //     chart: {
+      //       plotBackgroundColor: null,
+      //       plotBorderWidth: null,
+      //       plotShadow: false,
+      //       type: 'pie'
+      //     },
+      //     title: {
+      //       text: 'Education'
+      //     },
+      //     plotOptions: {
+      //       pie: {
+      //         allowPointSelect: true,
+      //         cursor: 'pointer',
+      //         dataLabels: {
+      //           enabled: true,
+      //           format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+      //           style: {
+      //             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+      //           }
+      //         }
+      //       }
+      //     },
+      //     series: [{
+      //       name: 'Education',
+      //       colorByPoint: true,
+      //       data: [{
+      //         name: '10th Pass',
+      //         y: response[12][2][0]
+      //       },
+      //       {
+      //         name: '12th Pass',
+      //         y: response[12][2][1]
+      //       },
+      //       {
+      //         name: 'Top Engg. Selecation',
+      //         y: response[12][2][2]
+      //       },
+      //       {
+      //         name: 'Top Medical Selecation',
+      //         y: response[12][2][3]
+      //       }
+      //       ]
+      //     }]
+      //   });
+      // });
 
       // GetSchoolInfra.getSchoolsInfra('33120100306').then(function (response) {
       //   Highcharts.chart('pieInfra', {
